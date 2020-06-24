@@ -23,7 +23,7 @@ class SignIn extends StatelessWidget {
               print("there is an error");
             } else {
               print("user logged in");
-              print(result);
+              print(result.uid);
             }
           },
           child: Text("Sign in Anonymous"),
