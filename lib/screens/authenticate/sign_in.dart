@@ -1,38 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:login/services/auth.dart';
+import 'package:login/shared/constants.dart';
 
 void main() => runApp(SignIn());
 
 class SignIn extends StatelessWidget {
-  final Auth _auth = Auth();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SignIn Anonymous"),
+        title: Text("Sign In"),
+        actions: <Widget>[
+          FlatButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, '/register');
+              },
+              icon: Icon(Icons.track_changes),
+              label: Text("Register"))
+        ],
       ),
       body: Container(
-        alignment: Alignment.topCenter,
-        padding: EdgeInsets.all(16),
-        child: FlatButton(
           padding: EdgeInsets.all(16),
-          onPressed: () async {
-            dynamic result = await _auth.signInAnon();
-            if (result == null) {
-              print("there is an error");
-            } else {
-              print("user logged in");
-              print(result.uid);
-            }
-          },
-          child: Text("Sign in Anonymous"),
-          color: Colors.pink,
-          textColor: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        ),
-      ),
+          child: Form(
+              child: Column(
+            children: <Widget>[
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _emailController,
+                decoration:
+                    kTextFieldDecoration.copyWith(labelText: "Enter email"),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                  controller: _passwordController,
+                  decoration: kTextFieldDecoration.copyWith(
+                      labelText: "Enter password")),
+              SizedBox(height: 20),
+              FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                onPressed: () {
+                  print(_emailController.text);
+                  print(_passwordController.text);
+                },
+                child: Text("Sign In"),
+                color: Colors.pink,
+              )
+            ],
+          ))),
     );
   }
 }

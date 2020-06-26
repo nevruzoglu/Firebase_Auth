@@ -28,9 +28,14 @@ class Auth {
     }
   }
 
-  // void _register() async {
-  //   final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
-  //           email: _emailController.text, password: _passworController))
-  //       .user;
-  // }
+  // sign out
+
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }
