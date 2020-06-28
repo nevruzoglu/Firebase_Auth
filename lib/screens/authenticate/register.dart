@@ -1,10 +1,12 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:login/services/auth.dart';
 import 'package:login/shared/constants.dart';
 
 void main() => runApp(Register());
 
 class Register extends StatelessWidget {
+  final Auth _auth = Auth();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -50,10 +52,10 @@ class Register extends StatelessWidget {
                 FlatButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState.validate()) {
-                      print(_emailController.text);
-                      print(_passwordController.text);
+                      dynamic result = await _auth.registerWithEmailAndPassword(
+                          _emailController.text, _passwordController.text);
                     }
                   },
                   child: Text(

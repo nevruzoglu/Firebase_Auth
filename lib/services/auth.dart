@@ -16,6 +16,20 @@ class Auth {
         .map(_userFromFirebaseUser);
   }
 
+// Register with Email&Password
+
+  Future registerWithEmailAndPassword(email, password) async {
+    try {
+      AuthResult _result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = _result.user;
+      return _userFromFirebaseUser(user);
+    } catch (err) {
+      print(err.toString());
+      return null;
+    }
+  }
+
 //sign in anon
   Future signInAnon() async {
     try {
