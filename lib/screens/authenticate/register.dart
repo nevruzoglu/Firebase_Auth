@@ -34,6 +34,7 @@ class Register extends StatelessWidget {
               children: <Widget>[
                 SizedBox(height: 20),
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   validator: (val) => EmailValidator.validate(val)
                       ? null
                       : "Please enter valid email",
@@ -54,7 +55,7 @@ class Register extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
-                      dynamic result = await _auth.registerWithEmailAndPassword(
+                      await _auth.registerWithEmailAndPassword(
                           _emailController.text, _passwordController.text);
                     }
                   },
