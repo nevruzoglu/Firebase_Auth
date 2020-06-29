@@ -4,6 +4,7 @@ import 'package:login/screens/authenticate/register.dart';
 import 'package:login/screens/authenticate/sign_in.dart';
 import 'package:login/screens/homeauth_wrapper.dart';
 import 'package:login/services/auth.dart';
+import 'package:login/test.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
