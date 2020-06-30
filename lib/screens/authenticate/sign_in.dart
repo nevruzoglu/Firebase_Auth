@@ -5,10 +5,24 @@ import 'package:login/shared/constants.dart';
 
 void main() => runApp(SignIn());
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  final Function toggleView;
+  SignIn({this.toggleView});
+
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  final Auth _auth = Auth();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
+  String error = "Hatalı";
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +32,7 @@ class SignIn extends StatelessWidget {
         actions: <Widget>[
           FlatButton.icon(
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                widget.toggleView();
               },
               icon: Icon(Icons.arrow_forward),
               label: Text("Register"))
@@ -51,15 +65,24 @@ class SignIn extends StatelessWidget {
                   FlatButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        print(_emailController.text);
-                        print(_passwordController.text);
+                        dynamic result = await _auth.signInWithEmailAndPassword(
+                            _emailController.text, _passwordController.text);
+                        if (result == null) {
+                          setState(() {
+                            error = "Cant sign In";
+                          });
+                        }
                       }
                     },
                     child: Text("Sign In"),
                     color: Colors.pink,
-                  )
+                  ),
+                  SizedBox(height: 20),
+                  Text(error,
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.w600))
                 ],
               ))),
     );

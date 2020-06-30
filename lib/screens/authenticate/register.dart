@@ -5,10 +5,20 @@ import 'package:login/shared/constants.dart';
 
 void main() => runApp(Register());
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+  final Function toggleView;
+  Register({this.toggleView});
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
   final Auth _auth = Auth();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -20,7 +30,7 @@ class Register extends StatelessWidget {
           actions: <Widget>[
             FlatButton.icon(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/signIn');
+                  widget.toggleView();
                 },
                 icon: Icon(Icons.arrow_forward),
                 label: Text("Sign In"))
